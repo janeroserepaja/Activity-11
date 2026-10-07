@@ -119,7 +119,6 @@ export default function ProfileScreen() {
 
           <View style={styles.line} />
 
-          {/* New Member Since Row */}
           <View style={styles.infoRow}>
             <View style={styles.iconBox}>
               <Text style={styles.icon}>📅</Text>
@@ -129,6 +128,22 @@ export default function ProfileScreen() {
               <Text style={styles.infoLabel}>Member Since</Text>
               <Text style={styles.infoValue}>
                 2026
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.line} />
+
+          {/* Student ID */}
+          <View style={styles.infoRow}>
+            <View style={styles.iconBox}>
+              <Text style={styles.icon}>🪪</Text>
+            </View>
+
+            <View style={styles.infoContent}>
+              <Text style={styles.infoLabel}>Student ID</Text>
+              <Text style={styles.infoValue}>
+                BSIT-2026-001
               </Text>
             </View>
           </View>
