@@ -1,3 +1,4 @@
+```tsx
 import {
   SafeAreaView,
   ScrollView,
@@ -112,6 +113,22 @@ export default function ProfileScreen() {
               <Text style={styles.infoLabel}>Course</Text>
               <Text style={styles.infoValue}>
                 Bachelor of Science in Information Technology
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.line} />
+
+          {/* New Member Since Row */}
+          <View style={styles.infoRow}>
+            <View style={styles.iconBox}>
+              <Text style={styles.icon}>📅</Text>
+            </View>
+
+            <View style={styles.infoContent}>
+              <Text style={styles.infoLabel}>Member Since</Text>
+              <Text style={styles.infoValue}>
+                2026
               </Text>
             </View>
           </View>
@@ -390,3 +407,4 @@ const styles = StyleSheet.create({
     height: 20,
   },
 });
+```
