@@ -8,6 +8,24 @@ import {
   View,
 } from 'react-native';
 
+// Profile data
+const profile = {
+  initials: 'JR',
+  name: 'Jane Repaja',
+  email: 'janeroserepaja@75@gmail.com',
+  course: 'BSIT • 3rd Year',
+  bio: 'Information Technology Student',
+  fullCourse:
+    'Bachelor of Science in Information Technology',
+  memberSince: 2026,
+  studentId: 'BSIT-2026-001',
+  statistics: {
+    projects: 12,
+    badges: 8,
+    points: 24,
+  },
+};
+
 export default function ProfileScreen() {
   return (
     <SafeAreaView style={styles.container}>
@@ -15,7 +33,6 @@ export default function ProfileScreen() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
       >
-
         {/* Header */}
         <View style={styles.header}>
           <Text style={styles.headerTitle}>My Profile</Text>
@@ -28,15 +45,15 @@ export default function ProfileScreen() {
         {/* Profile */}
         <View style={styles.profileSection}>
           <View style={styles.avatar}>
-            <Text style={styles.avatarText}>JR</Text>
+            <Text style={styles.avatarText}>
+              {profile.initials}
+            </Text>
           </View>
 
-          <Text style={styles.name}>Jane Repaja</Text>
-          <Text style={styles.course}>BSIT • 3rd Year</Text>
+          <Text style={styles.name}>{profile.name}</Text>
+          <Text style={styles.course}>{profile.course}</Text>
 
-          <Text style={styles.bio}>
-            Information Technology Student
-          </Text>
+          <Text style={styles.bio}>{profile.bio}</Text>
 
           <TouchableOpacity style={styles.editButton}>
             <Text style={styles.editButtonText}>
@@ -48,21 +65,27 @@ export default function ProfileScreen() {
         {/* Statistics */}
         <View style={styles.statsCard}>
           <View style={styles.stat}>
-            <Text style={styles.statNumber}>12</Text>
+            <Text style={styles.statNumber}>
+              {profile.statistics.projects}
+            </Text>
             <Text style={styles.statLabel}>Projects</Text>
           </View>
 
           <View style={styles.divider} />
 
           <View style={styles.stat}>
-            <Text style={styles.statNumber}>8</Text>
+            <Text style={styles.statNumber}>
+              {profile.statistics.badges}
+            </Text>
             <Text style={styles.statLabel}>Badges</Text>
           </View>
 
           <View style={styles.divider} />
 
           <View style={styles.stat}>
-            <Text style={styles.statNumber}>24</Text>
+            <Text style={styles.statNumber}>
+              {profile.statistics.points}
+            </Text>
             <Text style={styles.statLabel}>Points</Text>
           </View>
         </View>
@@ -73,7 +96,6 @@ export default function ProfileScreen() {
         </Text>
 
         <View style={styles.card}>
-
           <View style={styles.infoRow}>
             <View style={styles.iconBox}>
               <Text style={styles.icon}>👤</Text>
@@ -82,7 +104,7 @@ export default function ProfileScreen() {
             <View style={styles.infoContent}>
               <Text style={styles.infoLabel}>Full Name</Text>
               <Text style={styles.infoValue}>
-                Jane Repaja
+                {profile.name}
               </Text>
             </View>
           </View>
@@ -97,7 +119,7 @@ export default function ProfileScreen() {
             <View style={styles.infoContent}>
               <Text style={styles.infoLabel}>Email</Text>
               <Text style={styles.infoValue}>
-                janeroserepaja@75@gmail.com
+                {profile.email}
               </Text>
             </View>
           </View>
@@ -112,7 +134,7 @@ export default function ProfileScreen() {
             <View style={styles.infoContent}>
               <Text style={styles.infoLabel}>Course</Text>
               <Text style={styles.infoValue}>
-                Bachelor of Science in Information Technology
+                {profile.fullCourse}
               </Text>
             </View>
           </View>
@@ -127,7 +149,7 @@ export default function ProfileScreen() {
             <View style={styles.infoContent}>
               <Text style={styles.infoLabel}>Member Since</Text>
               <Text style={styles.infoValue}>
-                2026
+                {profile.memberSince}
               </Text>
             </View>
           </View>
@@ -143,11 +165,10 @@ export default function ProfileScreen() {
             <View style={styles.infoContent}>
               <Text style={styles.infoLabel}>Student ID</Text>
               <Text style={styles.infoValue}>
-                BSIT-2026-001
+                {profile.studentId}
               </Text>
             </View>
           </View>
-
         </View>
 
         {/* Settings */}
@@ -156,7 +177,6 @@ export default function ProfileScreen() {
         </Text>
 
         <View style={styles.card}>
-
           <TouchableOpacity style={styles.settingRow}>
             <View style={styles.settingLeft}>
               <View style={styles.iconBox}>
@@ -202,11 +222,9 @@ export default function ProfileScreen() {
 
             <Text style={styles.arrow}>›</Text>
           </TouchableOpacity>
-
         </View>
 
         <View style={styles.bottomSpace} />
-
       </ScrollView>
     </SafeAreaView>
   );
