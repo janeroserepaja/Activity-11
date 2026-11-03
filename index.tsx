@@ -1,9 +1,10 @@
-```tsx
+import { useState } from 'react';
 import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -15,8 +16,7 @@ const profile = {
   email: 'janeroserepaja@75@gmail.com',
   course: 'BSIT • 3rd Year',
   bio: 'Information Technology Student',
-  fullCourse:
-    'Bachelor of Science in Information Technology',
+  fullCourse: 'Bachelor of Science in Information Technology',
   memberSince: 2026,
   studentId: 'BSIT-2026-001',
   statistics: {
@@ -27,6 +27,12 @@ const profile = {
 };
 
 export default function ProfileScreen() {
+  const [name, setName] = useState(profile.name);
+  const [email, setEmail] = useState(profile.email);
+  const [course, setCourse] = useState(profile.course);
+  const [bio, setBio] = useState(profile.bio);
+  const [isEditing, setIsEditing] = useState(false);
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -36,76 +42,104 @@ export default function ProfileScreen() {
         {/* Header */}
         <View style={styles.header}>
           <Text style={styles.headerTitle}>My Profile</Text>
-
-          <TouchableOpacity>
-            <Text style={styles.moreButton}>•••</Text>
-          </TouchableOpacity>
+          <Text style={styles.moreButton}>•••</Text>
         </View>
 
         {/* Profile */}
         <View style={styles.profileSection}>
           <View style={styles.avatar}>
             <Text style={styles.avatarText}>
-              {profile.initials}
+              {name.split(' ').map(word => word[0]).join('').slice(0, 2).toUpperCase()}
             </Text>
           </View>
 
-          <Text style={styles.name}>{profile.name}</Text>
-          <Text style={styles.course}>{profile.course}</Text>
+          {isEditing ? (
+            <>
+              <TextInput
+                style={styles.editInput}
+                value={name}
+                onChangeText={setName}
+                placeholder="Enter your name"
+              />
 
-          <Text style={styles.bio}>{profile.bio}</Text>
+              <TextInput
+                style={styles.editInput}
+                value={email}
+                onChangeText={setEmail}
+                placeholder="Enter your email"
+                keyboardType="email-address"
+              />
 
-          <TouchableOpacity style={styles.editButton}>
-            <Text style={styles.editButtonText}>
-              Edit Profile
-            </Text>
-          </TouchableOpacity>
+              <TextInput
+                style={styles.editInput}
+                value={course}
+                onChangeText={setCourse}
+                placeholder="Enter your course"
+              />
+
+              <TextInput
+                style={styles.editInput}
+                value={bio}
+                onChangeText={setBio}
+                placeholder="Enter your bio"
+              />
+
+              <TouchableOpacity
+                style={styles.editButton}
+                onPress={() => setIsEditing(false)}
+              >
+                <Text style={styles.editButtonText}>Save Changes</Text>
+              </TouchableOpacity>
+            </>
+          ) : (
+            <>
+              <Text style={styles.name}>{name}</Text>
+              <Text style={styles.course}>{course}</Text>
+              <Text style={styles.bio}>{bio}</Text>
+
+              <TouchableOpacity
+                style={styles.editButton}
+                onPress={() => setIsEditing(true)}
+              >
+                <Text style={styles.editButtonText}>Edit Profile</Text>
+              </TouchableOpacity>
+            </>
+          )}
         </View>
 
         {/* Statistics */}
         <View style={styles.statsCard}>
           <View style={styles.stat}>
-            <Text style={styles.statNumber}>
-              {profile.statistics.projects}
-            </Text>
+            <Text style={styles.statNumber}>{profile.statistics.projects}</Text>
             <Text style={styles.statLabel}>Projects</Text>
           </View>
 
           <View style={styles.divider} />
 
           <View style={styles.stat}>
-            <Text style={styles.statNumber}>
-              {profile.statistics.badges}
-            </Text>
+            <Text style={styles.statNumber}>{profile.statistics.badges}</Text>
             <Text style={styles.statLabel}>Badges</Text>
           </View>
 
           <View style={styles.divider} />
 
           <View style={styles.stat}>
-            <Text style={styles.statNumber}>
-              {profile.statistics.points}
-            </Text>
+            <Text style={styles.statNumber}>{profile.statistics.points}</Text>
             <Text style={styles.statLabel}>Points</Text>
           </View>
         </View>
 
         {/* Personal Information */}
-        <Text style={styles.sectionTitle}>
-          Personal Information
-        </Text>
+        <Text style={styles.sectionTitle}>Personal Information</Text>
 
         <View style={styles.card}>
           <View style={styles.infoRow}>
             <View style={styles.iconBox}>
               <Text style={styles.icon}>👤</Text>
             </View>
-
             <View style={styles.infoContent}>
               <Text style={styles.infoLabel}>Full Name</Text>
-              <Text style={styles.infoValue}>
-                {profile.name}
-              </Text>
+              <Text style={styles.infoValue}>{name}</Text>
             </View>
           </View>
 
@@ -115,12 +149,9 @@ export default function ProfileScreen() {
             <View style={styles.iconBox}>
               <Text style={styles.icon}>✉</Text>
             </View>
-
             <View style={styles.infoContent}>
               <Text style={styles.infoLabel}>Email</Text>
-              <Text style={styles.infoValue}>
-                {profile.email}
-              </Text>
+              <Text style={styles.infoValue}>{email}</Text>
             </View>
           </View>
 
@@ -130,12 +161,9 @@ export default function ProfileScreen() {
             <View style={styles.iconBox}>
               <Text style={styles.icon}>🎓</Text>
             </View>
-
             <View style={styles.infoContent}>
               <Text style={styles.infoLabel}>Course</Text>
-              <Text style={styles.infoValue}>
-                {profile.fullCourse}
-              </Text>
+              <Text style={styles.infoValue}>{profile.fullCourse}</Text>
             </View>
           </View>
 
@@ -145,83 +173,46 @@ export default function ProfileScreen() {
             <View style={styles.iconBox}>
               <Text style={styles.icon}>📅</Text>
             </View>
-
             <View style={styles.infoContent}>
               <Text style={styles.infoLabel}>Member Since</Text>
-              <Text style={styles.infoValue}>
-                {profile.memberSince}
-              </Text>
+              <Text style={styles.infoValue}>{profile.memberSince}</Text>
             </View>
           </View>
 
           <View style={styles.line} />
 
-          {/* Student ID */}
           <View style={styles.infoRow}>
             <View style={styles.iconBox}>
               <Text style={styles.icon}>🪪</Text>
             </View>
-
             <View style={styles.infoContent}>
               <Text style={styles.infoLabel}>Student ID</Text>
-              <Text style={styles.infoValue}>
-                {profile.studentId}
-              </Text>
+              <Text style={styles.infoValue}>{profile.studentId}</Text>
             </View>
           </View>
         </View>
 
         {/* Settings */}
-        <Text style={styles.sectionTitle}>
-          Settings
-        </Text>
+        <Text style={styles.sectionTitle}>Settings</Text>
 
         <View style={styles.card}>
-          <TouchableOpacity style={styles.settingRow}>
-            <View style={styles.settingLeft}>
-              <View style={styles.iconBox}>
-                <Text style={styles.icon}>⚙</Text>
-              </View>
+          {['Account Settings', 'Notifications', 'Privacy'].map((item, index) => (
+            <View key={item}>
+              <TouchableOpacity style={styles.settingRow}>
+                <View style={styles.settingLeft}>
+                  <View style={styles.iconBox}>
+                    <Text style={styles.icon}>
+                      {['⚙', '🔔', '🔒'][index]}
+                    </Text>
+                  </View>
+                  <Text style={styles.settingText}>{item}</Text>
+                </View>
+                <Text style={styles.arrow}>›</Text>
+              </TouchableOpacity>
 
-              <Text style={styles.settingText}>
-                Account Settings
-              </Text>
+              {index !== 2 && <View style={styles.line} />}
             </View>
-
-            <Text style={styles.arrow}>›</Text>
-          </TouchableOpacity>
-
-          <View style={styles.line} />
-
-          <TouchableOpacity style={styles.settingRow}>
-            <View style={styles.settingLeft}>
-              <View style={styles.iconBox}>
-                <Text style={styles.icon}>🔔</Text>
-              </View>
-
-              <Text style={styles.settingText}>
-                Notifications
-              </Text>
-            </View>
-
-            <Text style={styles.arrow}>›</Text>
-          </TouchableOpacity>
-
-          <View style={styles.line} />
-
-          <TouchableOpacity style={styles.settingRow}>
-            <View style={styles.settingLeft}>
-              <View style={styles.iconBox}>
-                <Text style={styles.icon}>🔒</Text>
-              </View>
-
-              <Text style={styles.settingText}>
-                Privacy
-              </Text>
-            </View>
-
-            <Text style={styles.arrow}>›</Text>
-          </TouchableOpacity>
+          ))}
         </View>
 
         <View style={styles.bottomSpace} />
@@ -235,11 +226,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F7F2FF',
   },
-
   scrollContent: {
     paddingBottom: 30,
   },
-
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -248,25 +237,22 @@ const styles = StyleSheet.create({
     paddingTop: 18,
     paddingBottom: 10,
   },
-
   headerTitle: {
     fontSize: 25,
     fontWeight: '700',
     color: '#4B3B61',
   },
-
   moreButton: {
     fontSize: 22,
     color: '#8A78A6',
     letterSpacing: 2,
   },
-
   profileSection: {
     alignItems: 'center',
     paddingTop: 18,
     paddingBottom: 25,
+    paddingHorizontal: 22,
   },
-
   avatar: {
     width: 105,
     height: 105,
@@ -278,32 +264,37 @@ const styles = StyleSheet.create({
     borderWidth: 4,
     borderColor: '#E8DDF5',
   },
-
   avatarText: {
     color: '#FFFFFF',
     fontSize: 32,
     fontWeight: '700',
   },
-
   name: {
     fontSize: 24,
     fontWeight: '700',
     color: '#40334F',
   },
-
   course: {
     fontSize: 14,
     color: '#8066A3',
     marginTop: 5,
     fontWeight: '600',
   },
-
   bio: {
     fontSize: 13,
     color: '#93869F',
     marginTop: 7,
   },
-
+  editInput: {
+    width: '100%',
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#E5D9F2',
+    borderRadius: 12,
+    padding: 12,
+    marginTop: 10,
+    color: '#4B3B61',
+  },
   editButton: {
     backgroundColor: '#9B7BC1',
     paddingHorizontal: 28,
@@ -311,13 +302,11 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginTop: 15,
   },
-
   editButtonText: {
     color: '#FFFFFF',
     fontSize: 13,
     fontWeight: '700',
   },
-
   statsCard: {
     flexDirection: 'row',
     backgroundColor: '#FFFFFF',
@@ -330,30 +319,25 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#E8DDF5',
   },
-
   stat: {
     flex: 1,
     alignItems: 'center',
   },
-
   statNumber: {
     fontSize: 21,
     fontWeight: '700',
     color: '#76569A',
   },
-
   statLabel: {
     fontSize: 12,
     color: '#998DA5',
     marginTop: 4,
   },
-
   divider: {
     width: 1,
     height: 35,
     backgroundColor: '#E8DDF5',
   },
-
   sectionTitle: {
     fontSize: 18,
     fontWeight: '700',
@@ -361,7 +345,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 22,
     marginBottom: 12,
   },
-
   card: {
     backgroundColor: '#FFFFFF',
     marginHorizontal: 22,
@@ -371,13 +354,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#EDE5F5',
   },
-
   infoRow: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 16,
   },
-
   iconBox: {
     width: 42,
     height: 42,
@@ -387,57 +368,46 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginRight: 13,
   },
-
   icon: {
     fontSize: 18,
   },
-
   infoContent: {
     flex: 1,
   },
-
   infoLabel: {
     fontSize: 11,
     color: '#A095AA',
     marginBottom: 3,
   },
-
   infoValue: {
     fontSize: 14,
     color: '#51465B',
     fontWeight: '600',
   },
-
   line: {
     height: 1,
     backgroundColor: '#F0EAF5',
   },
-
   settingRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingVertical: 13,
   },
-
   settingLeft: {
     flexDirection: 'row',
     alignItems: 'center',
   },
-
   settingText: {
     fontSize: 14,
     color: '#51465B',
     fontWeight: '600',
   },
-
   arrow: {
     fontSize: 27,
     color: '#A995BC',
   },
-
   bottomSpace: {
     height: 20,
   },
 });
-```
